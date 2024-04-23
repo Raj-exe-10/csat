@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert Data</title>
+<script>
+function submitForm(event) {
+    event.preventDefault();
+    const id = document.getElementById('id').value;
+    const st_name = document.getElementById('st_name').value;
+    const email = document.getElementById('email').value;
+
+    fetch('/insert', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, st_name, email }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        // Reset the form after successful submission
+        document.getElementById('dataForm').reset();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+</script>
+</head>
+<body>
+<h2>Insert Data</h2>
+<form id="dataForm" onsubmit="submitForm(event)">
+    <label for="id">ID:</label><br>
+    <input type="text" id="id" name="id"><br>
+    <label for="st_name">Name:</label><br>
+    <input type="text" id="st_name" name="st_name"><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
